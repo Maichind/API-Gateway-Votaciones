@@ -127,6 +127,33 @@ def eliminarUsuario(id):
     json = response.json()
     return jsonify(json)
 
+
+# Redireccionamiento Mesas
+@app.route("/mesas",methods=['GET'])
+def getMesas():
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-results"]+ '/mesas'
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
+@app.route("/mesas/<string:id>",methods=['GET'])
+def getMesa(id):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-results"] + '/mesas/'+ id
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
+@app.route("/mesas",methods=['POST'])
+def crearMesas():
+    data = request.get_json()
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-results"] + '/mesas'
+    response = requests.post(url, headers=headers,json=data)
+    json = response.json()
+    return jsonify(json)
+
 if __name__=='__main__':
     dataConfig = loadFileConfig()
     print("Server running : "+"http://"+dataConfig["url-backend"]+":" +
