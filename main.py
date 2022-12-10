@@ -3,7 +3,7 @@ import json
 import re
 import requests
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from waitress import serve
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -17,6 +17,7 @@ cors = CORS(app)
 app.config["JWT_SECRET_KEY"]="super-secret"
 jwt = JWTManager(app)
 
+@cross_origin
 @app.route("/login", methods=["POST"])
 def create_token():
     data = request.get_json()
@@ -32,6 +33,7 @@ def create_token():
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
+@cross_origin
 @app.route("/",methods=['GET'])
 def test():
     json = {}
@@ -129,6 +131,7 @@ def eliminarUsuario(id):
 
 
 # Redireccionamiento Mesas
+@cross_origin
 @app.route("/mesas",methods=['GET'])
 def getMesas():
     headers = {"Content-Type": "application/json; charset=utf-8"}
@@ -137,6 +140,7 @@ def getMesas():
     json = response.json()
     return jsonify(json)
 
+@cross_origin
 @app.route("/mesas/<string:id>",methods=['GET'])
 def getMesa(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
