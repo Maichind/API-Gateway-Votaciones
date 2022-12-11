@@ -33,6 +33,7 @@ def create_token():
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
+@cross_origin
 @app.route("/",methods=['GET'])
 def test():
     json = {}
@@ -139,6 +140,7 @@ def getMesas():
     json = response.json()
     return jsonify(json)
 
+@cross_origin
 @app.route("/mesas/<string:id>",methods=['GET'])
 def getMesa(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
